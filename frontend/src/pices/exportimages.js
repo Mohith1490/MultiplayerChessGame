@@ -1,4 +1,4 @@
-import K from '/home/blackbird/Documents/chessgame/frontend/src/pices/Kingwhite.png'
+import K from './Kingwhite.png'
 import Q from './Q.png'
 import B from './B.png'
 import N from './N.png'
