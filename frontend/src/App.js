@@ -19,7 +19,7 @@ const App = () => {
   const [start, setStart] = useState('');
   const [end, setEnd] = useState('');
   const [piece, setPiece] = useState('');
-  let islocalmove = true
+  const [iswhite,setWhite] = useState(false)
 
   useEffect(() => {
     // Initialize socket connection once
@@ -27,17 +27,20 @@ const App = () => {
 
     if(start !== '' &&end  !== ''&&piece  !== ''){
   
-     Socket.emit('usermoves',[start,end,piece])
+     Socket.emit('usermoves',[start,end,piece,iswhite])
 
-    Socket.on('move2', ([from, to, piece]) => {
+    Socket.on('move2', ([from, to, piece,turnblack]) => {
       console.log(from, to, piece, 'recived from server' );
-      
-      const [fromRow, fromCol] = from;
-      const [toRow, toCol] = to;
-      const updatedBoard = [...board];
-      updatedBoard[toRow][toCol] = piece;
-      updatedBoard[fromRow][fromCol] = ' ';
-      setBoard(updatedBoard);
+      if(turnblack){
+
+        const [fromRow, fromCol] = from.split('');
+        const [toRow, toCol] = to.split('');
+        const updatedBoard = [...board];
+        updatedBoard[toRow][toCol] = piece;
+        updatedBoard[fromRow][fromCol] = ' ';
+        setBoard(updatedBoard);
+        setWhite(true)
+      }
     })   
     }
 
