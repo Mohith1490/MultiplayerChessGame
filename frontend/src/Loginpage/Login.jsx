@@ -8,10 +8,8 @@ const Login = () => {
   let [lastname, setlastname] = useState('');
   let [email, setemail] = useState('');
   let [password, setpassword] = useState('');
-
   async function sendingData(event) {
     event.preventDefault();
-
     let usersinfo = { firstname, lastname, email, password };
     try {
       let response = await fetch('http://localhost:4000/', {

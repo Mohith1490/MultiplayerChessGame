@@ -15,7 +15,6 @@ function isValidPawnMove(from, to, piece) {
   const [toCol, toRow] = to;
   const direction = piece === 'P' ? -1 : 1;
   const startRow = piece === 'P' ? 6 : 1;
-  console.log(fromCol, fromRow, toCol, toRow);
   if (toCol === fromCol) {
     // Regular move
     if (board[toRow][toCol] === '') {
