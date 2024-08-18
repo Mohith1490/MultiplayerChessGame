@@ -45,11 +45,23 @@ app.post('/',async (req,res)=>{
 
 app.use('/game',userverification)
 
+let gamemembers = {}
 
-io.on("connection", (socket) => {
-   socket.on('usermoves', ([from,to,piece,iswhite]) => {
-      let turnblack = !iswhite
-      console.log('sending the coordinates ', [from,to,piece]);      
-      socket.emit('move2',[from,to,piece,turnblack])
-   })  
+io.on("connection", (socket) => {   
+   if(!gamemembers.white){
+      gamemembers.white = socket.id
+   }
+   else if(!gamemembers.black){
+      gamemembers.black = socket.id
+   }
+   console.log(gamemembers);
+   
+   socket.on('usermoves',([start, end, piece, white])=>{
+      if(white){
+         socket.emit('opponentmoves',[start, end, piece, !white])         
+      }
+      else{
+         socket.broadcast.to(gamemembers.white).emit('opponentmoves',[start, end, piece, white])
+      }
+   })
 })
